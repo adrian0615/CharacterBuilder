@@ -47,18 +47,18 @@ public class PlayerCharacter {
     }
     
     public var classification: CharacterClassification
-    public fileprivate(set) var chewing: Int
-    public fileprivate(set) var gulping: Int
-    public fileprivate(set) var intake: Int
+    public var chewing: Int
+    public var gulping: Int
+    public var intake: Int
     
     
-    public init(name: String, classification: CharacterClassification, maxMagic: Int, magic: Int, health: Int) {
+    public init(name: String, classification: CharacterClassification, maxMagic: Int, magic: Int, health: Int, points: Int) {
         self.name = name
         self.health = maxHealth
         self.maxMagic = 10
         self.magic = maxMagic
-        self.points = 0
-        self.classification = .none
+        self.points = points
+        self.classification = classification
         self.intake = 0
         self.chewing = 0
         self.gulping = 0
@@ -117,13 +117,13 @@ public class PlayerCharacter {
             self.intake = 3
         }
         
-        if self.classification == .eater{
+        if self.classification == .eater {
             self.chewing = 4
-            self.gulping = 2
-            self.intake = 3
+            self.gulping = 1
+            self.intake = 2
         }
         
-        if self.classification == .none{
+        if self.classification == .none {
             self.chewing = 2
             self.gulping = 2
             self.intake = 4

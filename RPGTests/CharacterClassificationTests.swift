@@ -12,7 +12,7 @@ import RPG
 
 class CharacterClassificationTests: XCTestCase {
     func testTakeDamage() {
-        let tim = PlayerCharacter(name: "Tim", classification: .eater, maxMagic: 10, magic: 10, health: 50)
+        let tim = PlayerCharacter(name: "Tim", classification: .eater, maxMagic: 10, magic: 10, health: 50, points: 0)
         
         XCTAssertEqual(tim.health, 50)
         tim.takeDamage(10)
@@ -22,7 +22,7 @@ class CharacterClassificationTests: XCTestCase {
     
     
     func testHealthTakeAndGain() {
-        let lisa = PlayerCharacter(name: "Lisa", classification: .drinker, maxMagic: 10, magic: 10, health: 50)
+        let lisa = PlayerCharacter(name: "Lisa", classification: .drinker, maxMagic: 10, magic: 10, health: 50, points: 0)
         
         XCTAssertEqual(lisa.health, 50)
         lisa.takeDamage(20)
@@ -33,7 +33,7 @@ class CharacterClassificationTests: XCTestCase {
     
     
     func testPointsToNextExperienceLevel() {
-        let kujo = PlayerCharacter(name: "Kujo", classification: .drinker, maxMagic: 10, magic: 10, health: 50)
+        let kujo = PlayerCharacter(name: "Kujo", classification: .drinker, maxMagic: 10, magic: 10, health: 50, points: 0)
         
         let test = kujo.pointsTilNextExperienceLevel(0)
         let expected = 2

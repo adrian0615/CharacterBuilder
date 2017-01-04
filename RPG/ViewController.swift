@@ -11,56 +11,88 @@ import UIKit
 class ViewController: UIViewController {
     
     
+    let characters: [PlayerCharacter] = [ PlayerCharacter(name: "Draygon", classification: .eater, maxMagic: 10, magic: 8, health: 40, points: 1), PlayerCharacter(name: "Arriyon", classification: .drinker, maxMagic: 10, magic: 9, health: 40, points: 3), PlayerCharacter(name: "Bob", classification: .none, maxMagic: 10, magic: 8, health: 30, points: 5)]
     
+    var charIndex: Int = 0 {
+        didSet {
+            if charIndex >= characters.count {
+                charIndex %= characters.count
+            }
+            while charIndex < 0 {
+                charIndex += characters.count
+            }
+        }
+    }
     
+    var currentCharacter: PlayerCharacter {
+        return characters[charIndex]
+    }
     
-    
-    let character = PlayerCharacter(name: "Draygon", classification: .eater, maxMagic: 10, magic: 8, health: 50)
     
     //fix labels
     
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var classLabel: UILabel!
-    @IBOutlet var maxHeatlhLabel: UILabel!
     @IBOutlet var heatlhLabel: UILabel!
-    @IBOutlet var maxMagicLabel: UILabel!
     @IBOutlet var magicLabel: UILabel!
     @IBOutlet var experienceLabel: UILabel!
     @IBOutlet var statusLabel: UILabel!
     @IBOutlet var nextExperiencePointLabel: UILabel!
+    @IBOutlet var intakeLabel: UILabel!
+    @IBOutlet var chewingLabel: UILabel!
+    @IBOutlet var gulpingLabel: UILabel!
+    
+    
+    @IBAction func prev() {
+        charIndex -= 1
+        currentCharacter.determineStats()
+        update()
+    }
+    
+    @IBAction func next() {
+        charIndex += 1
+        currentCharacter.determineStats()
+        update()
+    }
     
     @IBAction func hurt1() {
-        character.takeDamage(1)
-        super.viewWillAppear(true)
+        currentCharacter.takeDamage(1)
+        update()
     }
     @IBAction func hurt() {
-        character.takeDamage(10)
-        super.viewWillAppear(true)
+        currentCharacter.takeDamage(10)
+        update()
     }
     @IBAction func heal1() {
-        character.gainHealth(1)
-        super.viewWillAppear(true)
+        currentCharacter.gainHealth(1)
+        update()
     }
     @IBAction func heal() {
-        character.gainHealth(10)
-        super.viewWillAppear(true)
+        currentCharacter.gainHealth(10)
+        update()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
     
+    func update() {
+        currentCharacter.determineStats()
+        nameLabel.text = currentCharacter.name
+        heatlhLabel.text = "health: \(String(currentCharacter.health))|\(String(currentCharacter.maxHealth))"
+        magicLabel.text = "magic: \(String(currentCharacter.magic))|\(String(currentCharacter.maxMagic))"
+        experienceLabel.text = String(describing: currentCharacter.experience)
+        nextExperiencePointLabel.text = "\(String(currentCharacter.pointsTilNextExperienceLevel(currentCharacter.points))) til next level"
+        statusLabel.text = "status: \(String(describing: currentCharacter.status))"
+        classLabel.text = "class: \(String(describing: currentCharacter.classification))"
+        intakeLabel.text = "intake: \(String(currentCharacter.intake))"
+        chewingLabel.text = "chewing: \(String(currentCharacter.chewing))"
+        gulpingLabel.text = "gulping: \(String(currentCharacter.chewing))"
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        nameLabel.text = character.name
-        maxHeatlhLabel.text = String(character.maxHealth)
-        heatlhLabel.text = String(character.health)
-        maxMagicLabel.text = String(character.maxMagic)
-        magicLabel.text = String(character.magic)
-        experienceLabel.text = String(describing: character.experience)
-        nextExperiencePointLabel.text = "\(String(character.pointsTilNextExperienceLevel(character.points)))"
-        statusLabel.text = String(describing: character.status)
-        classLabel.text = String(describing: character.classification)
+        update()
     }
     
 

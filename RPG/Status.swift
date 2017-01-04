@@ -16,7 +16,7 @@ public enum Status : CustomStringConvertible {
     public var description: String {
         switch self {
         case .normal:
-            return "Normal"
+            return "Ready for Consumption"
         case .full:
             return "Full"
         }
